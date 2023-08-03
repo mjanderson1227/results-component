@@ -15,5 +15,6 @@
 .DS_Store
 .prettierignore
 
-# Exclude Node Packages
+# Exclude Node Packages and Modules
 package-lock.json
+node_modules
