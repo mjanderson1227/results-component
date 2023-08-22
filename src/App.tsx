@@ -50,26 +50,28 @@ function StatsDisplay() {
     new Stat("/images/icon-visual.svg", "blue", "Visual", 72)
   ];
 
-  const colorMap = new Map([
-    ["red", ["bg-red-50", "text-red-400"]],
-    ["yellow", ["bg-yellow-50", "text-yellow-400"]],
-    ["green", ["bg-green-50", "text-green-400"]],
-    ["blue", ["bg-blue-50", "text-blue-400"]]
-  ]);
+  const colorMap = {
+    "red": ["bg-red-50 rounded-full", "text-red-400 text-xl"],
+    "yellow": ["bg-yellow-50 rounded-full", "text-yellow-400 text-xl"],
+    "green": ["bg-green-50 rounded-full", "text-green-400 text-xl"],
+    "blue": ["bg-blue-50 rounded-full", "text-blue-400 text-xl"]
+  };
 
   return (
-    <div className="">
+    <div className="md:m-[20%]">
       <h1>Summary</h1>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col gap-8">
         {
           stats.map(element => {
             const { image, color, text, percentage } = element;
             return (
               <li key={text} >
-                <div className={colorMap.get(color)![0]}>
-                  <img src={image} alt="A listing item" />
-                  <h1 className={colorMap.get(color)![1]}>{text}</h1>
-                  <h3 className="font-bold">{percentage}</h3>
+                <div className={colorMap[color as keyof typeof colorMap][0]}>
+                  <div className="md:h-16 flex">
+                    <img className="md:h-[60%]" src={image} alt="A listing item" />
+                    <h1 className={colorMap[color as keyof typeof colorMap][1]}>{text}</h1>
+                    <h3 className="font-bold">{percentage}</h3>
+                  </div>
                 </div>
               </li>
             );
