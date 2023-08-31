@@ -1,17 +1,3 @@
-class Stat {
-  public image: string;
-  public color: string;
-  public text: string;
-  public percentage: number
-
-  constructor(img: string, color: string, text: string, percentage: number) {
-    this.image = img;
-    this.color = color;
-    this.text = text;
-    this.percentage = percentage;
-  }
-}
-
 export default function App() {
   return (
     <div className='lg:h-[100dvh] h-[120dvh] bg-slate-200 lg:p-[15dvh] lg:pr-[40dvh] lg:pl-[40dvh] flex flex-col'>
@@ -42,39 +28,61 @@ function PercentageDisplay({percentScore, percentile, statusMessage}: Percentage
   );
 }
 
+class Style {
+  public image: string;
+  public color: string;
+  public text: string;
+  public percentage: number;
+
+  constructor(image: string, color: string, text: string, percentage: number) {
+    this.image = image;
+    this.color = color;
+    this.text = text;
+    this.percentage = percentage;
+  }
+}
 function StatsDisplay() {
-  const stats: Stat[] = [
-    new Stat("/images/icon-reaction.svg", "red", "Reaction", 80),
-    new Stat("/images/icon-memory.svg", "yellow", "Memory", 92),
-    new Stat("/images/icon-verbal.svg", "green", "Verbal", 61),
-    new Stat("/images/icon-visual.svg", "blue", "Visual", 72)
+  const stats: Style[] = [
+    new Style("/images/icon-reaction.svg", "red", "Reaction", 80),
+    new Style("/images/icon-memory.svg", "yellow", "Memory", 92),
+    new Style("/images/icon-verbal.svg", "green", "Verbal", 61 ),
+    new Style("/images/icon-visual.svg", "blue", "Visual", 72 )
   ];
 
-  const colorMap = new Map([
-    ["red", ["bg-red-50", "text-red-400"]],
-    ["yellow", ["bg-yellow-50", "text-yellow-400"]],
-    ["green", ["bg-green-50", "text-green-400"]],
-    ["blue", ["bg-blue-50", "text-blue-400"]]
-  ]);
+  const colorStyles: Record<string, string[]> = {
+    "red": ["bg-red-50 rounded-lg", "text-red-400"],
+    "yellow": ["bg-yellow-50 rounded-lg", "text-yellow-400"],
+    "green": ["bg-green-50 rounded-lg", "text-green-400"],
+    "blue": ["bg-blue-50 rounded-lg", "text-blue-400"]
+  }
 
   return (
-    <div className="">
-      <h1>Summary</h1>
-      <ul className="flex flex-col">
+    <div className="p-10">
+      <ul className="flex flex-col gap-4 justify-start">
+        <li className="self-start mb-4">
+          <h1>Summary</h1>
+        </li>
         {
           stats.map(element => {
             const { image, color, text, percentage } = element;
             return (
-              <li key={text} >
-                <div className={colorMap.get(color)![0]}>
-                  <img src={image} alt="A listing item" />
-                  <h1 className={colorMap.get(color)![1]}>{text}</h1>
-                  <h3 className="font-bold">{percentage}</h3>
+              <li key={text}>
+                <div className={colorStyles[color][0]}>
+                  <div className="flex p-4 justify-between">
+                    <img src={image} alt="A listing item" className="mr-4"/>
+                    <div>
+                      <h1 className={colorStyles[color][1]}>{text}</h1>
+                    </div>
+                    <h3 className="font-bold ml-auto">{percentage}&nbsp;<span className="text-zinc-500">/&nbsp;100</span></h3>
+                  </div>
                 </div>
               </li>
             );
           })
         }
+        <li className="text-slate-100 bg-slate-800 text-center w-full h-12 rounded-full flex-grow lg:mt-10 self-center flex-col flex justify-center">
+          <button className="h-full rounded-full">Continue</button>
+        </li>
       </ul>
     </div>
   );
