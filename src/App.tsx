@@ -66,14 +66,12 @@ function StatsDisplay() {
           stats.map(element => {
             const { image, color, text, percentage } = element;
             return (
-              <li key={text}>
-                <div className={colorStyles[color][0]}>
-                  <div className="flex p-4 justify-between">
-                    <img src={image} alt="A listing item" className="mr-4"/>
-                    <div>
-                      <h1 className={colorStyles[color][1]}>{text}</h1>
-                    </div>
-                    <h3 className="font-bold ml-auto">{percentage}&nbsp;<span className="text-zinc-500">/&nbsp;100</span></h3>
+              <li key={text} >
+                <div className={colorMap[color as keyof typeof colorMap][0]}>
+                  <div className="md:h-16 flex">
+                    <img className="md:h-[60%]" src={image} alt="A listing item" />
+                    <h1 className={colorMap[color as keyof typeof colorMap][1]}>{text}</h1>
+                    <h3 className="font-bold">{percentage}</h3>
                   </div>
                 </div>
               </li>
